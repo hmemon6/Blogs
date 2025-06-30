@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -140,3 +141,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'blogs_app:index'
 LOGOUT_REDIRECT_URL = 'blogs_app:index'
 LOGIN_URL = 'accounts:login'
+
+
+
+
+
+
+import dj_database_url
+if 'uvicorn' in sys.argv[0]:
+    # Example: override settings when running with uvicorn
+    DEBUG = False
+    ALLOWED_HOSTS = ['*']
+    DATABASES = {
+        'default': dj_database_url.config(
+                # Replace this value with your local database's connection string.
+                default='postgresql://hmemon6:mMNCDKPIVwTlS9jX64Q6I42YtVxLf7JW@dpg-d1hc853ipnbc73bmns4g-a/pgblog',
+                conn_max_age=600
+            )
+}

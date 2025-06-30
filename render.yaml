@@ -1,8 +1,8 @@
 databases:
-  - name: blog_projectdb
+  - name: dpg-d1hc853ipnbc73bmns4g-a
     plan: free
-    databaseName: blog_project
-    user: blog_project
+    databaseName: pgblog
+    user: hmemon6
 
 services:
   - type: web
@@ -10,7 +10,7 @@ services:
     name: blog_project
     runtime: python
     buildCommand: './build.sh'
-    startCommand: 'python -m uvicorn mysite.asgi:application --workers 4'
+    startCommand: 'python -m uvicorn blog_project.asgi:application --workers 4'
     envVars:
       - key: DATABASE_URL
         fromDatabase:
