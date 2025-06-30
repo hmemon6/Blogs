@@ -1,0 +1,17 @@
+# Virtual Environment
+blog_env/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Django
+db.sqlite3
+media/
+staticfiles/
+
+# OS and editor
+.DS_Store
+.vscode/

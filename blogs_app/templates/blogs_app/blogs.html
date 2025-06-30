@@ -1,0 +1,70 @@
+{% extends 'blogs_app/base.html' %}
+
+
+{%block content%}
+
+<div class="container mt-5">
+    <h2 class="mb-4" style="font-weight: 700; letter-spacing: 1px; color: #6c2eb7; display: inline-block;">
+       My Blogs
+    </h2>
+    <div style="height: 4px; width: 100%; background: linear-gradient(90deg, #a084e8, #6c2eb7); border-radius: 2px; margin-bottom: 24px;"></div>
+    <div class="list-group mb-4">
+        {% for blog in blogs %}
+        <div class="mb-2 blog-hover" style="border-radius: 10px; overflow: hidden; transition: transform 0.3s;">
+            <a href="{% url 'blogs_app:blog' blog.id %}" class="list-group-item list-group-item-action blog-link" style="transition: background 0.3s;">
+            <h5 class="mb-1">{{ blog.blog_topic }}</h5>
+            <small class="text-muted">Date posted: {{ blog.date_added|date:"M d, Y" }}</small>
+            <small class="text-muted">Date modified: {{ blog.date_modified|date:"M d, Y" }}</small>
+            <p class="mb-1">{{ blog.description|truncatewords:20 }}</p>
+            </a>
+        </div>
+        <style>
+            .blog-hover:hover {
+            transform: scale(1.03);
+            }
+            .blog-hover .blog-link:hover, .blog-hover:hover .blog-link {
+            background: #f3e8ff !important;
+            transition: background 0.3s;
+            }
+        </style>
+        {% empty %}
+            <div class="alert alert-info">No blogs available.</div>
+        {% endfor %}
+    </div>
+
+    {% if blogs.has_other_pages %}
+    <nav>
+        <ul class="pagination justify-content-center">
+            {% if blogs.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ blogs.previous_page_number }}">Previous</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
+                </li>
+            {% endif %}
+
+            {% for num in blogs.paginator.page_range %}
+                {% if blogs.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% elif num > blogs.number|add:'-3' and num < blogs.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if blogs.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ blogs.next_page_number }}">Next</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">Next</span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+
+{%endblock content%}
