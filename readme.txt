@@ -137,4 +137,9 @@ my_pizza.topping_set.all().
 
 
 
+If you want to run uvicorn, use the following:
+
+python -m uvicorn blog_project.asgi:application
+
+
 

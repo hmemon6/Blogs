@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import sys
-
+import dj_database_url
+import os
+from dotenv import load_dotenv
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,10 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$vrh=tpw3h78ce=wdhg-4ge%dmq90!e3l%7l79hsvv&v9b=$l^'
+
+DJANGO_KEY = os.environ.get("SECRET_KEY")
+
+SECRET_KEY = 'DJANGO_KEY'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -90,6 +97,15 @@ DATABASES = {
 }
 
 
+# DATABASES = {
+#         "default": dj_database_url.parse(
+#                 os.environ.get("DATABASE_URL"),
+#                 conn_max_age=60,
+#                 ssl_require=True 
+#             )
+# }
+
+
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -147,15 +163,17 @@ LOGIN_URL = 'accounts:login'
 
 
 
-import dj_database_url
+# import dj_database_url
 if 'uvicorn' in sys.argv[0]:
     # Example: override settings when running with uvicorn
     DEBUG = False
     ALLOWED_HOSTS = ['*']
     DATABASES = {
-        'default': dj_database_url.config(
-                # Replace this value with your local database's connection string.
-                default='postgresql://hmemon6:mMNCDKPIVwTlS9jX64Q6I42YtVxLf7JW@dpg-d1hc853ipnbc73bmns4g-a/pgblog',
-                conn_max_age=600
+        "default": dj_database_url.parse(
+                os.environ.get("DATABASE_URL"),
+                conn_max_age=60,
+                ssl_require=True 
             )
 }
+    
+    

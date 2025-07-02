@@ -23,11 +23,8 @@ def index(request):
 def new_blog(request):
     
     blogs = Blog.objects.filter(user=request.user).order_by('date_modified')
-    blog = blogs.first()  # Get the first blog from the queryset, or None if empty
     
-    if request.user != blog.user:
-        raise Http404
-    
+
     if request.method != 'POST':
         form = BlogForm()
     else:

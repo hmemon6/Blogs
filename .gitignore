@@ -1,6 +1,7 @@
 # Virtual Environment
 blog_env/
 venv/
+.env
 
 # Python
 __pycache__/
