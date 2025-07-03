@@ -176,4 +176,6 @@ if 'gunicorn' in sys.argv[0]:
             )
     }
     
+    print("DATABASE_URL:", os.environ.get("DATABASE_URL"))
+    
     
