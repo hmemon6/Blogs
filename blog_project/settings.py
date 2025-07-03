@@ -33,7 +33,7 @@ SECRET_KEY = 'DJANGO_KEY'
 DEBUG = True
 # DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*', "blogs-git-main-hmemon6s-projects.vercel.app", "blogs-tau-three.vercel.app", ".vercel.app"]
 
 
 # Application definition
@@ -167,7 +167,7 @@ LOGIN_URL = 'accounts:login'
 if 'uvicorn' in sys.argv[0]:
     # Example: override settings when running with uvicorn
     DEBUG = False
-    ALLOWED_HOSTS = ['*', "blogs-git-main-hmemon6s-projects.vercel.app"]
+    ALLOWED_HOSTS = ['*', "blogs-git-main-hmemon6s-projects.vercel.app", "blogs-tau-three.vercel.app", ".vercel.app"]
     # ALLOWED_HOSTS = [".vercel.app", ".now.sh"]
     DATABASES = {
         "default": dj_database_url.parse(
