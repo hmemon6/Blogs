@@ -58,6 +58,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -89,19 +90,18 @@ WSGI_APPLICATION = 'blog_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # DATABASES = {
 #         "default": dj_database_url.parse(
 #                 os.environ.get("DATABASE_URL"),
-#                 conn_max_age=60,
-#                 ssl_require=True 
+#                 conn_max_age=60 
 #             )
 # }
 
@@ -141,15 +141,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STATIC_FILES_DIRS = [
+    BASE_DIR / 'static'
+]
+
+# STORAGES = {
+#     # ...
+#     "staticfiles": {
+#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#     },
+# }
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-
-
 
 
 # My Settings added after defualt settings
@@ -161,14 +170,16 @@ LOGIN_URL = 'accounts:login'
 
 
 
-
-# Dont forget to set DJANGO_ENV == production in vercel
+# Dont forget to set DJANGO_ENV == production in vercel to run the app in supabase postgress
 if os.environ.get("DJANGO_ENV") == "production":
     DEBUG = False
     ALLOWED_HOSTS = [
         "blogs-git-main-hmemon6s-projects.vercel.app",
         "blogs-tau-three.vercel.app",
         ".vercel.app",
+        "localhost", 
+        "127.0.0.1"
+        
     ]
     DATABASES = {
         "default": dj_database_url.parse(

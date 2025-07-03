@@ -69,7 +69,11 @@ def login_required_if_private(view_func):
 def blog(request, blog_id):
     
     blog = Blog.objects.get(id=blog_id)
-    posts = Post.objects.filter(blog=blog).order_by('-date_added')
+    posts_list = Post.objects.filter(blog=blog).order_by('-date_added')
+    paginator = Paginator(posts_list, 5)  # Show 5 posts per page (change as needed)
+    page_number = request.GET.get('page')
+    posts = paginator.get_page(page_number)
+    # posts = Post.objects.filter(blog=blog).order_by('-date_added')
     
     if not blog.public_blog:
         if blog.user != request.user:
