@@ -162,20 +162,30 @@ LOGIN_URL = 'accounts:login'
 
 
 
-
-# import dj_database_url
-if 'gunicorn' in sys.argv[0]:
-    # Example: override settings when running with gunicorn
+# Dont forget to set DJANGO_ENV == production in vercel
+if os.environ.get("DJANGO_ENV") == "production":
     DEBUG = False
-    ALLOWED_HOSTS = ["blogs-git-main-hmemon6s-projects.vercel.app", "blogs-tau-three.vercel.app", ".vercel.app"]
+    ALLOWED_HOSTS = [
+        "blogs-git-main-hmemon6s-projects.vercel.app",
+        "blogs-tau-three.vercel.app",
+        ".vercel.app",
+    ]
     DATABASES = {
         "default": dj_database_url.parse(
-                os.environ.get("DATABASE_URL"),
-                conn_max_age=60,
-                ssl_require=True 
-            )
+            os.environ.get("DATABASE_URL"),
+            conn_max_age=60,
+            ssl_require=True,
+        )
     }
-    
-    print("DATABASE_URL:", os.environ.get("DATABASE_URL"))
+else:
+    # Development settings here
+    DEBUG = True
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
     
     
