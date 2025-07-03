@@ -164,7 +164,7 @@ LOGIN_URL = 'accounts:login'
 
 # Dont forget to set DJANGO_ENV == production in vercel
 if os.environ.get("DJANGO_ENV") == "production":
-    DEBUG = True
+    DEBUG = False
     ALLOWED_HOSTS = [
         "blogs-git-main-hmemon6s-projects.vercel.app",
         "blogs-tau-three.vercel.app",
@@ -174,7 +174,6 @@ if os.environ.get("DJANGO_ENV") == "production":
         "default": dj_database_url.parse(
             os.environ.get("DATABASE_URL"),
             conn_max_age=60,
-            # ssl_require=True,
         )
     }
 else:
