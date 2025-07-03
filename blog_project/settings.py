@@ -164,17 +164,16 @@ LOGIN_URL = 'accounts:login'
 
 
 # import dj_database_url
-if 'uvicorn' in sys.argv[0]:
-    # Example: override settings when running with uvicorn
+if 'gunicorn' in sys.argv[0]:
+    # Example: override settings when running with gunicorn
     DEBUG = False
     ALLOWED_HOSTS = ["blogs-git-main-hmemon6s-projects.vercel.app", "blogs-tau-three.vercel.app", ".vercel.app"]
-    # ALLOWED_HOSTS = [".vercel.app", ".now.sh"]
     DATABASES = {
         "default": dj_database_url.parse(
                 os.environ.get("DATABASE_URL"),
                 conn_max_age=60,
                 ssl_require=True 
             )
-}
+    }
     
     
