@@ -167,7 +167,7 @@ LOGIN_URL = 'accounts:login'
 if 'uvicorn' in sys.argv[0]:
     # Example: override settings when running with uvicorn
     DEBUG = False
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ['*', "blogs-git-main-hmemon6s-projects.vercel.app"]
     # ALLOWED_HOSTS = [".vercel.app", ".now.sh"]
     DATABASES = {
         "default": dj_database_url.parse(
