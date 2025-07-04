@@ -139,7 +139,14 @@ my_pizza.topping_set.all().
 
 If you want to run uvicorn, use the following:
 
-python -m uvicorn blog_project.asgi:application
+#python -m uvicorn blog_project.asgi:application
 
+for wsgi
+
+#python -m gunicorn blog_project.wsgi:application
+
+please note wsgi is not supported on windows and will need linux vm or wsl to work, 
+I set it up because vercel supports wsgi and not asgi so running the command on windows wont work
+but vercel will manage to make it work
 
 

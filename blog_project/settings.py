@@ -189,7 +189,7 @@ if os.environ.get("DJANGO_ENV") == "production":
     }
 else:
     # Development settings here
-    DEBUG = True
+    DEBUG = False
     ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
     DATABASES = {
         "default": {
