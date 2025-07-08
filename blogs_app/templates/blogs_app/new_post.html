@@ -1,0 +1,22 @@
+{% extends "blogs_app/base.html" %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+        <h2 class="mb-4" style="font-weight: 700; letter-spacing: 1px; color: #6c2eb7; display: inline-block;">
+       New Post
+    </h2>
+    <div style="height: 4px; width: 100%; background: linear-gradient(90deg, #a084e8, #6c2eb7); border-radius: 2px; margin-bottom: 24px;"></div>
+    {% if blog.id %}
+    <form action="{% url 'blogs_app:new_post' blog.id %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-primary mt-2"> Add Post</button>
+    </form>
+    <a href="{% url 'blogs_app:blog' blog.id %}" class="btn btn-secondary mt-2">Back to Posts</a>
+
+    {%else%}
+    <p>Blog.id not found</p>
+    {%endif%}
+    
+{% endblock content %}

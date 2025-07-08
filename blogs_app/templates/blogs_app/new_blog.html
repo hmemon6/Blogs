@@ -1,0 +1,14 @@
+{% extends "blogs_app/base.html" %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Add New Blog</h2>
+    <form action="{% url 'blogs_app:new_blog' %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% bootstrap_button "Add Topic" button_type="submit" %}
+
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% extends "blogs_app/base.html" %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+    <h2>Post Details</h2>
+    <form method="post" action="{% url 'blogs_app:post' post.id %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% bootstrap_button "Save changes" button_type="submit" button_class="btn-primary" name="action" value="save" %}
+        {% bootstrap_button "Delete" button_type="submit" button_class="btn-danger" name="action" value="delete" %}
+    </form>
+{% endblock %}

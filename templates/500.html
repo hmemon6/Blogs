@@ -1,0 +1,27 @@
+{% extends "blogs_app/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h1 class="display-1 text-danger"><i class="bi bi-exclamation-triangle-fill"></i> 500</h1>
+                    <h2 class="mb-4">Internal Server Error</h2>
+                    <p class="lead">Oops! Something went wrong on our end.</p>
+                    <hr>
+                    <h5>Possible reasons:</h5>
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item">A temporary server issue</li>
+                        <li class="list-group-item">A bug in our application</li>
+                        <li class="list-group-item">Unexpected input or request</li>
+                        <li class="list-group-item">Database connection problems</li>
+                    </ul>
+                    <p class="mb-3">Please try again later or <a href="{% url 'blogs_app:index' %}">return to the homepage</a>.</p>
+                    <a href="javascript:location.reload()" class="btn btn-danger">Reload Page</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

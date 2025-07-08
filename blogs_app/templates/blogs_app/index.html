@@ -1,0 +1,136 @@
+{% extends 'blogs_app/base.html' %}
+
+{% block page_header%}
+<div class="container mt-4">
+    <div class="alert alert-secondary shadow-sm" role="alert">
+        <h1 class="display-5 mb-2" style="color: #6c2eb7;">Welcome to the Blog App!</h1>
+        <p class="lead mb-1">
+            Discover, share, and discuss ideas with the community. Create your own blogs, write posts, and engage with others. 
+            Browse public blogs, follow your interests, and join the conversation!
+        </p>
+        <hr>
+        <p class="mb-0">
+            <strong>Features:</strong> User accounts, blog creation, post management, pagination, and a modern, responsive design.
+        </p>
+    </div>
+</div>
+{% endblock page_header%}
+
+{% block content%}
+
+<div class="mt-5">
+    <h2 class="mb-4" style="font-weight: 700; letter-spacing: 1px; color: #6c2eb7; display: inline-block;">
+       All Public Blogs
+    </h2>
+    <div style="height: 4px; width: 100%; background: linear-gradient(90deg, #a084e8, #6c2eb7); border-radius: 2px; margin-bottom: 24px;"></div>
+</div>
+
+
+
+<div>
+    {% if blogs.has_other_pages %}
+    <nav>
+        <ul class="pagination justify-content-center">
+            {% if blogs.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ blogs.previous_page_number }}">Previous</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
+                </li>
+            {% endif %}
+
+            {% for num in blogs.paginator.page_range %}
+                {% if blogs.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% elif num > blogs.number|add:'-3' and num < blogs.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if blogs.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ blogs.next_page_number }}">Next</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">Next</span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+
+
+
+{%for blog in blogs%}
+
+<style>
+.small {
+    color: #fff !important;
+}
+
+.card {
+    border: 1px solid #a084e8;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(108, 46, 183, 0.08);
+    transition: box-shadow 0.2s;
+}
+.card:hover {
+    box-shadow: 0 6px 24px rgba(108, 46, 183, 0.18);
+    border-color: #6c2eb7;
+}
+.card-header {
+    background: linear-gradient(90deg, #a084e8 60%, #6c2eb7 100%);
+    color: #fff;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    padding: 1rem 1.5rem;
+}
+.card-title {
+    color: #6c2eb7;
+    font-weight: 600;
+}
+.btn-primary {
+    background: linear-gradient(90deg, #a084e8, #6c2eb7);
+    border: none;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+}
+.btn-primary:hover {
+    background: linear-gradient(90deg, #6c2eb7, #a084e8);
+}
+
+</style>
+
+
+<div class="card mb-3">
+  <div class="card-header">
+    <div class="d-flex justify-content-between align-items-center">
+      <h2 class="mb-0">{{ blog.blog_topic }}</h2>
+      <div class="d-flex flex-column align-items-end">
+        <p class="small mb-0 text-muted">Published on {{ blog.date_added }} by <strong>{{ blog.user }}</strong></p>
+        <p class="small text-muted">Edited on {{ blog.date_modified }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    {% comment %} posts is a custom related name set in models on foreign key, for defautl use post_set.count {% endcomment %}
+    <h5 class="card-title">Posts: {{ blog.posts.count }}</h5>
+    <p class="card-text">{{blog.description}}</p>
+    <a href="{% url 'blogs_app:blog' blog.id %}" class="btn btn-primary">See Posts</a>
+  </div>
+</div>
+
+
+
+
+
+{% empty %}
+<div class="alert alert-info">No blogs available.</div>
+{% endfor %}
+
+{% endblock content%}

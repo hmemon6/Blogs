@@ -1,0 +1,121 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blogs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 5 CSS -->
+    {% load django_bootstrap5 %}
+    {% bootstrap_css%}
+    {% bootstrap_javascript %}
+    
+    <link rel="stylesheet" href="{% static 'blogs_app/css/styles.css' %}">
+    {% block extrastyles%}{%endblock extrastyles%}
+    
+{% comment %} 
+    <style>
+        .glow-hover {
+            transition: text-shadow 0.5s;
+        }
+        .glow-hover:hover {
+            text-shadow: 0 0 10px #a084ca, 0 0 20px #a084ca, 0 0 30px #a084ca;
+            color: #ffffff;
+        }
+
+        .custom-dropdown .nav-link.dropdown-toggle:hover, 
+        .custom-dropdown .nav-link.dropdown-toggle:focus {
+            background-color: #a084ca;
+            color: #fff !important;
+            border-radius: 0.5rem;
+            transition: background 0.3s, color 0.3s;
+            text-shadow: 0 0 8px #a084ca;
+            font-weight: bold;
+        }
+        .custom-dropdown .dropdown-menu .dropdown-item {
+            font-weight: bold;
+            transition: background 0.2s, color 0.2s;
+        }
+        .custom-dropdown .dropdown-menu .dropdown-item:hover {
+            background-color: #e0d4f7;
+            color: #6c3483;
+            font-weight: bold;
+        }
+        .navbar-nav .nav-item .nav-link {
+            font-weight: bold;
+            transition: background 0.2s, color 0.2s;
+        }
+        .navbar-nav .nav-item .nav-link:hover,
+        .navbar-nav .nav-item .nav-link:focus {
+            background-color: #e0d4f7;
+            color: #6c3483 !important;
+            border-radius: 0.5rem;
+            font-weight: bold;
+        }
+
+    </style> {% endcomment %}
+
+</head>
+<body style="background-color: #FAF9F6">
+<div class="container-fluid" style="--bs-gutter-x: 0rem;">
+<nav class="navbar navbar-expand-lg sticky-top"  style="background-color: #CBC3E3;">
+    <div class="container-lg">
+        <h1>
+            <a class="navbar-brand fs-1 glow-hover" href="{% url 'blogs_app:index' %}">Blogs</a>
+        </h1>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                {% if user.is_authenticated %}
+                
+                <li class="nav-item dropdown custom-dropdown">  
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Blogs
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'blogs_app:blogs' %}">Blogs</a></li>
+                        <li><a class="dropdown-item" href="{% url 'blogs_app:new_blog' %}">Add Blog</a></li>
+                        {% comment %} <li><hr class="dropdown-divider"></li> {% endcomment %}
+                        {% comment %} <li><a class="dropdown-item" href="#">Something else here</a></li> {% endcomment %}
+                    </ul>
+                </li>
+                <li class="nav-item">
+                        <button class="btn btn-outline-light nav-link px-3" style="pointer-events: none;"type="none" style="border: none; background: none;">{{user.username}}</button>
+                </li>
+                <li class="nav-item">
+                        <form method="post" action="{% url 'accounts:logout' %}">
+                            {% csrf_token %}
+                            <button class="btn btn-outline-light nav-link px-3" type="submit" style="border: none; background: none;">Logout</button>
+                        </form>
+                    </li>
+                    
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:register' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:login' %}">Log In</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+
+<div class="container mt-4">
+
+    {% block page_header %}
+    {% endblock page_header %}
+
+    {% block content %}
+    {% endblock content%}
+</div>
+
+</body>
+</html>
